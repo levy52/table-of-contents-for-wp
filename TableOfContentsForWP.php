@@ -22,7 +22,7 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 
 function add_table_of_contents_to_post_content($content)
 {
-    if (is_singular()) {
+    if (is_singular('post')) {
         $dom = new DOMDocument;
         $dom->loadHTML('<?xml encoding="UTF-8>' . $content);
 
