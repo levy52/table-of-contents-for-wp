@@ -5,6 +5,7 @@ Description: Description: Elevate your WordPress content with an interactive Tab
 Version: 1.0
 Author: Radosław Lewicki
 Author URI: https://github.com/levy52
+Domain Path: /languages
 License: GPLv2 or later
 */
 
@@ -26,7 +27,7 @@ function add_table_of_contents_to_post_content($content) {
     $toc_list = '<div class="content">';
     $toc_list .= '<div class="table-of-contents__wrapper">';
     $toc_list .= '<ul class="table-of-contents">';
-    $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents') . '</p>';
+    $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
 
     foreach ($h2_elements as $index => $h2) {
         $h2_content = $h2->nodeValue;
