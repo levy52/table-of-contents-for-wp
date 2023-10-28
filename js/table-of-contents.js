@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var tocLinks = document.querySelectorAll('ul a');
+    var tocLinks = document.querySelectorAll('.table-of-contents__wrapper ul a');
 
     tocLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
