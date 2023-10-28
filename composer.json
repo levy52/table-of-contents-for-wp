@@ -1,0 +1,9 @@
+{
+    "name": "levy52/table-of-contents-for-wp",
+    "description": "Description: Elevate your WordPress content with an interactive Table of Contents and header links. Keep your readers engaged and help them navigate your posts seamlessly.",
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
+
