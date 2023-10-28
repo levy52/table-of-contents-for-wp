@@ -9,7 +9,8 @@ Domain Path: /languages
 License: GPLv2 or later
 */
 
-function enqueue_custom_assets() {
+function enqueue_custom_assets()
+{
     wp_register_script('custom-js', plugins_url('table-of-contents-for-wp/js/table-of-contents.js'));
     wp_enqueue_script('custom-js');
 
@@ -19,29 +20,34 @@ function enqueue_custom_assets() {
 
 add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 
-function add_table_of_contents_to_post_content($content) {
-    $dom = new DOMDocument;
-    $dom->loadHTML('<?xml encoding="UTF-8>' . $content);
+function add_table_of_contents_to_post_content($content)
+{
+    if (is_singular()) {
+        $dom = new DOMDocument;
+        $dom->loadHTML('<?xml encoding="UTF-8>' . $content);
 
-    $h2_elements = $dom->getElementsByTagName('h2');
-    $toc_list = '<div class="content">';
-    $toc_list .= '<div class="table-of-contents__wrapper">';
-    $toc_list .= '<ul class="table-of-contents">';
-    $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
+        $h2_elements = $dom->getElementsByTagName('h2');
+        $toc_list = '<div class="content">';
+        $toc_list .= '<div class="table-of-contents__wrapper">';
+        $toc_list .= '<ul class="table-of-contents">';
+        $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
 
-    foreach ($h2_elements as $index => $h2) {
-        $h2_content = $h2->nodeValue;
-        $id = sanitize_title($h2_content);
-        $h2->setAttribute('id', $id);
+        foreach ($h2_elements as $index => $h2) {
+            $h2_content = $h2->nodeValue;
+            $id = sanitize_title($h2_content);
+            $h2->setAttribute('id', $id);
 
-        $toc_list .= '<li><a href="#' . $id . '">' . $h2_content . '</a></li>';
+            $toc_list .= '<li><a href="#' . $id . '">' . $h2_content . '</a></li>';
+        }
+
+        $toc_list .= '</ul>';
+        $toc_list .= '</div>';
+
+        $new_content = $toc_list . '<div class="text_post post-content">' . $dom->saveHTML() . '</div></div>';
+        return $new_content;
+    } else {
+        return $content;
     }
-
-    $toc_list .= '</ul>';
-    $toc_list .= '</div>';
-
-    $new_content = $toc_list . '<div class="text_post post-content">' . $dom->saveHTML() . '</div></div>';
-    return $new_content;
 }
 
 add_filter('the_content', 'add_table_of_contents_to_post_content');
