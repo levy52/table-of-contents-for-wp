@@ -24,7 +24,7 @@ function add_table_of_contents_to_post_content($content)
 {
     if (is_singular('post')) {
         $dom = new DOMDocument;
-        $dom->loadHTML('<?xml encoding="UTF-8>' . $content);
+        $dom->loadHTML('<?xml encoding="UTF-8>"' . $content, LIBXML_NOERROR);
 
         $h2_elements = $dom->getElementsByTagName('h2');
         $thumbnail = get_the_post_thumbnail(null, 'full', array('class' => 'thumbnail'));
