@@ -27,6 +27,7 @@ function add_table_of_contents_to_post_content($content)
         $dom->loadHTML('<?xml encoding="UTF-8>' . $content);
 
         $h2_elements = $dom->getElementsByTagName('h2');
+        $thumbnail = get_the_post_thumbnail(null, 'full', array('class' => 'thumbnail'));
         $toc_list = '<div class="content">';
         $toc_list .= '<div class="table-of-contents__wrapper">';
         $toc_list .= '<ul class="table-of-contents">';
@@ -43,7 +44,7 @@ function add_table_of_contents_to_post_content($content)
         $toc_list .= '</ul>';
         $toc_list .= '</div>';
 
-        $new_content = $toc_list . '<div class="text_post post-content">' . $dom->saveHTML() . '</div></div>';
+        $new_content = $toc_list . '<div class="text_post post-content">' . $thumbnail . $dom->saveHTML() . '</div></div>';
         return $new_content;
     } else {
         return $content;

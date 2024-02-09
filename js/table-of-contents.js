@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-                var targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
+                var targetOffset = targetElement.getBoundingClientRect().top + window.scrollY - 50;
                 var duration = 500; 
 
                 function smoothScroll() {
