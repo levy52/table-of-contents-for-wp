@@ -39,20 +39,3 @@
     gap: 15px;
     width: 100%;
 }
-
-@media (min-width: 992px) {
-    .table-of-contents__wrapper {
-        position: sticky;
-        top: 30px;
-        height: min-content;
-    }
-    .content {
-        flex-wrap: nowrap;
-    }
-    .post-content {
-        max-width: 70%;
-    }
-    .table-of-contents__wrapper {
-        max-width: 30%;
-    }
-}

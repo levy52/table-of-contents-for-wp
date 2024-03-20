@@ -27,24 +27,14 @@ function add_table_of_contents_to_post_content($content)
         $dom->loadHTML('<?xml encoding="UTF-8>' . $content, LIBXML_NOERROR);
 
         $h2_elements = $dom->getElementsByTagName('h2');
-        $thumbnail = get_the_post_thumbnail(null, 'full', array('class' => 'thumbnail'));
-        $toc_list = '<div class="content">';
-        $toc_list .= '<div class="table-of-contents__wrapper">';
-        $toc_list .= '<ul class="table-of-contents">';
-        $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
 
         foreach ($h2_elements as $index => $h2) {
             $h2_content = $h2->nodeValue;
             $id = sanitize_title($h2_content);
             $h2->setAttribute('id', $id);
-
-            $toc_list .= '<li><a href="#' . $id . '">' . $h2_content . '</a></li>';
         }
 
-        $toc_list .= '</ul>';
-        $toc_list .= '</div>';
-
-        $new_content = $toc_list . '<div class="text_post post-content">' . $thumbnail . $dom->saveHTML() . '</div></div>';
+        $new_content = '<div class="post-content">' . $dom->saveHTML() . '</div>';
         return $new_content;
     } else {
         return $content;
@@ -52,3 +42,30 @@ function add_table_of_contents_to_post_content($content)
 }
 
 add_filter('the_content', 'add_table_of_contents_to_post_content');
+
+function generate_table_of_contents()
+{
+    global $post;
+    $content = $post->post_content;
+
+    $dom = new DOMDocument;
+    $dom->loadHTML('<?xml encoding="UTF-8>' . $content, LIBXML_NOERROR);
+
+    $h2_elements = $dom->getElementsByTagName('h2');
+    $toc_list = '<div class="table-of-contents__wrapper">';
+    $toc_list .= '<ul class="table-of-contents">';
+    $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
+
+    foreach ($h2_elements as $index => $h2) {
+        $h2_content = $h2->nodeValue;
+        $id = sanitize_title($h2_content);
+        $h2->setAttribute('id', $id);
+
+        $toc_list .= '<li><a href="#' . $id . '">' . $h2_content . '</a></li>';
+    }
+
+    $toc_list .= '</ul>';
+    $toc_list .= '</div>';
+
+    return $toc_list;
+}
