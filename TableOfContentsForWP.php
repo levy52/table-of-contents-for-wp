@@ -52,6 +52,10 @@ function generate_table_of_contents()
     $dom->loadHTML('<?xml encoding="UTF-8>' . $content, LIBXML_NOERROR);
 
     $h2_elements = $dom->getElementsByTagName('h2');
+
+    if ($h2_elements->length === 0) {
+        return '';
+    }
     $toc_list = '<div class="table-of-contents__wrapper">';
     $toc_list .= '<ul class="table-of-contents">';
     $toc_list .= '<p class="table-of-contents__title">' . __('Table of contents', $domain = 'levy52') . '</p>';
